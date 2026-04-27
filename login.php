@@ -4,7 +4,7 @@ session_start();
 include 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
     $role = $_POST['role']; 
 
@@ -20,9 +20,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepare and execute SELECT query
-    $query = "SELECT * FROM $table WHERE username=?";
+    if ($role == "admin") {
+        $query = "SELECT * FROM $table WHERE username=?";
+    } else {
+        $query = "SELECT * FROM $table WHERE username=? OR email=?";
+    }
+
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $username);
+    if ($role == "admin") {
+        $stmt->bind_param("s", $username);
+    } else {
+        $stmt->bind_param("ss", $username, $username);
+    }
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -38,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // ✅ Use password_verify to compare plain and hashed password
         if (password_verify($password, $hashedPasswordFromDB)) {
             // Login success
-            $_SESSION['username'] = $username;
+            $_SESSION['username'] = $row['username'];
             $_SESSION['role'] = $role;
 
             if ($role == "patient") {

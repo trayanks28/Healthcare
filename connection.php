@@ -19,7 +19,9 @@ if ($databaseUrl) {
 }
 
 // Create connection
-$conn = @new mysqli($host, $username, $password, $database, $port);
+$conn = mysqli_init();
+$sslFlag = in_array($host, ['localhost', '127.0.0.1'], true) ? 0 : MYSQLI_CLIENT_SSL;
+@$conn->real_connect($host, $username, $password, $database, $port, null, $sslFlag);
 
 // Check connection
 if ($conn->connect_error) {
