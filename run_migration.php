@@ -1,11 +1,6 @@
 <?php
 include 'connection.php';
 
-if (($_GET['key'] ?? '') !== 'phone-fix-20260427') {
-    http_response_code(403);
-    die('Forbidden');
-}
-
 $queries = [
     "ALTER TABLE `doctor` MODIFY `phone` varchar(20) NOT NULL",
     "ALTER TABLE `pateint` MODIFY `phone` varchar(20) NOT NULL",
