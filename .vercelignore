@@ -1,0 +1,7 @@
+.git
+.env
+.env.*
+healthcare.sql
+*.sql
+node_modules
+vendor

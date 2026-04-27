@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.9.0"
+    }
+  },
+  "routes": [
+    {
+      "src": "/$",
+      "dest": "/api/index.php?__page=index.php"
+    },
+    {
+      "src": "/(index|login|register|appointmentdoctor|doctor|admin|pateint|logout|view_invoice|text|session_test)\\.php",
+      "dest": "/api/index.php?__page=$1.php"
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}
