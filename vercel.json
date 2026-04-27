@@ -11,7 +11,7 @@
       "dest": "/api/index.php?__page=index.php"
     },
     {
-      "src": "/(index|login|register|appointmentdoctor|doctor|admin|pateint|logout|view_invoice|text|session_test)\\.php",
+      "src": "/(index|login|register|appointmentdoctor|doctor|admin|pateint|logout|view_invoice|text|session_test|run_migration)\\.php",
       "dest": "/api/index.php?__page=$1.php"
     },
     {

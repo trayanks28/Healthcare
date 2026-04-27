@@ -19,6 +19,7 @@ $routes = [
     '/view_invoice.php' => 'view_invoice.php',
     '/text.php' => 'text.php',
     '/session_test.php' => 'session_test.php',
+    '/run_migration.php' => 'run_migration.php',
 ];
 
 $script = $_GET['__page'] ?? ($routes[$path] ?? null);
