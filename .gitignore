@@ -1,0 +1,40 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore node_modules and vendor folders
+node_modules/
+vendor/
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore IDE specific files
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
+
+# Ignore log files
+*.log
+
+# Ignore compiled files
+*.pyc
+*.class
+*.o
+
+# Ignore OS generated files
+*.swp
+*.lock
+
+# Ignore database files
+*.sqlite3
+*.db
+
+# Ignore images and cache
+images/
+*.cache
+
+# Ignore other sensitive files
+healthcare.sql
