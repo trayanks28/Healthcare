@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssisssss", $first_name, $surname, $username, $email, $phone, $gender, $country, $hashed_password, $date_reg, $default_profile);
+    $stmt->bind_param("ssssssssss", $first_name, $surname, $username, $email, $phone, $gender, $country, $hashed_password, $date_reg, $default_profile);
 
     if ($stmt->execute()) {
         echo "<script>alert('Patient registered successfully!'); window.location.href='login.php';</script>";

@@ -37,21 +37,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $formStatus === 'open') {
         die("Error: Passwords do not match!");
     }
 
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Error: Invalid email format!");
+    }
+
+    if (!preg_match('/^[0-9]{10}$/', $phone)) {
+        die("Error: Invalid phone number! Must be 10 digits.");
+    }
+
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $check_query = "SELECT * FROM doctor WHERE username='$username' OR email='$email'";
-    $result = $conn->query($check_query);
+    $salary = "";
+    $profile = "";
+    $check_query = "SELECT id FROM doctor WHERE username = ? OR email = ?";
+    $stmt = $conn->prepare($check_query);
+    $stmt->bind_param("ss", $username, $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         die("Error: Username or Email already exists!");
     }
+    $stmt->close();
 
-    $sql = "INSERT INTO doctor (first_name, surname, username, email, gender, phone, country, password, status, date_reg) 
-            VALUES ('$first_name', '$surname', '$username', '$email', '$gender', '$phone', '$country', '$hashedPassword', 'pending', NOW())";
+    $sql = "INSERT INTO doctor (first_name, surname, username, email, gender, phone, country, password, salary, profile, status, date_reg) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssssss", $first_name, $surname, $username, $email, $gender, $phone, $country, $hashedPassword, $salary, $profile);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         echo "<script>alert('Doctor registered successfully. Wait for Admin Approval!'); location.href='appointmentdoctor.php';</script>";
         exit();
     } else {
-        die("Error: " . $conn->error);
+        die("Error: " . $stmt->error);
     }
 }
 ?>
@@ -174,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $formStatus === 'open') {
                     </select>
                 </div>
                 <div class="mb-3"><label class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" name="phone" required>
+                    <input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" required>
                 </div>
                 <div class="mb-3"><label class="form-label">Country</label>
                     <select class="form-select" name="country" required>
