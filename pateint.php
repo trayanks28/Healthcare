@@ -331,7 +331,7 @@ const bpChart = new Chart(ctx, {
   <div class="card">
     <i class="fa-solid fa-calendar-check"></i>
     <h3>Upcoming Appointments</h3>
-    <p>Next appointment on April 12, 2025 with Dr. Smith.</p>
+    <p>Next appointment on will be confirmed soon....</p>
     <a href="#" onclick="showSection('book-appointment')" class="btn btn-sm btn-primary mt-2">View All / reschedule</a>
   </div>
 
