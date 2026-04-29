@@ -339,7 +339,7 @@ const bpChart = new Chart(ctx, {
   <div class="card">
     <i class="fa-solid fa-heart-pulse"></i>
     <h3>Health Overview</h3>
-    <p>BP: 120/80 | HR: 75 BPM | BMI: 23.4</p>
+    <p>No recent health data available.</p>
     <small>Latest checkup data</small>
   </div>
 
